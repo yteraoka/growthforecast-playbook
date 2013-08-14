@@ -1,0 +1,37 @@
+- name: update supervisor config
+  ini_file: dest={{sup_conf_location}} section="program:growthforecast" option="{{item.option}}" value="{{item.value}}"
+  with_items:
+    - option: command
+      value: "/opt/perl-{{perl_major}}/bin/perl /opt/perl-{{perl_major}}/bin/growthforecast.pl --data-dir {{gf_data_dir}}"
+    - option: user
+      value: "{{gf_user}}"
+    - option: autostart
+      value: "true"
+    - option: autorestart
+      value: "true"
+    - option: stopwaitsecs
+      value: 600
+    - option: log_stdout
+      value: "true"
+    - option: log_stderr
+      value: "true"
+    - option: logfile
+      value: "/var/log/supervisor/growthcorecast.log"
+    - option: logfile_maxbytes
+      value: 1MB
+    - option: logfile_backups
+      value: 10
+  notify: restart supervisor
+  tags: supervisor
+
+# Due to weird behavior with Ubuntu, using restarted doesn't seem
+# to work due to the init script not actually restarting things
+# so we stop then start to make sure the playbook doesn't fail
+
+- name: stop supervisor
+  service: name={{sup_init_name}} state=stopped
+  tags: supervisor
+
+- name: start supervisor
+  service: name={{sup_init_name}} state=started enabled=yes
+  tags: supervisor

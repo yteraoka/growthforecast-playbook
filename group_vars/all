@@ -1,0 +1,6 @@
+gf_user: gf
+gf_group: gf
+sup_init_name: growthforecast
+perl_major: "5.16"
+perl_minor: "5.16.3"
+gf_data_dir: /var/lib/growthforecast

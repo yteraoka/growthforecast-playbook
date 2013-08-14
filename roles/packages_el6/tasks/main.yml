@@ -1,0 +1,23 @@
+- name: install epel6 repository
+  command: /bin/rpm -ivh http://ftp-srv2.kddilabs.jp/Linux/distributions/fedora/epel/6/x86_64/epel-release-6-8.noarch.rpm creates=/etc/yum.repos.d/epel.repo
+  notify:
+    - import epel key
+  tags: epel
+
+- name: install required packages for EL6
+  yum: name=$item state=installed
+  with_items:
+    - gcc
+    - make
+    - patch
+    - supervisor
+    - pkgconfig
+    - glib2-devel
+    - gettext
+    - libxml2-devel
+    - pango-devel
+    - cairo-devel
+    - git
+  tags: packages
+
+

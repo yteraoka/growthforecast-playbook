@@ -1,0 +1,7 @@
+- name: build perl
+  shell: curl -s https://raw.github.com/tokuhirom/Perl-Build/master/perl-build | perl - ${perl_minor} /opt/perl-${perl_major} creates=/opt/perl-${perl_major}/bin/perl
+  tags: perl
+
+- name: install cpanm
+  shell: git clone git://github.com/miyagawa/cpanminus.git && cd cpanminus && /opt/perl-${perl_major}/bin/perl Makefile.PL && make install creates=/opt/perl-${perl_major}/bin/cpanm
+  tags: perl

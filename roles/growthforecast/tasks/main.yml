@@ -1,0 +1,7 @@
+- name: install GrowthForecast
+  shell: /opt/perl-{{perl_major}}/bin/cpanm -n GrowthForecast creates=/opt/perl-5.16/bin/growthforecast.pl
+  tags: gf
+
+- name: create GrowthForecast data dir
+  file: path=/var/lib/growthforecast state=directory owner={{gf_user}} group={{gf_group}}
+  tags: gf

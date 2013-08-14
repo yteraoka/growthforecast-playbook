@@ -1,0 +1,7 @@
+- name: create growthforecast group
+  group: name={{gf_group}} state=present
+  tags: user
+
+- name: create growthforecast user
+  user: name={{gf_user}} comment="GrowthForecast" group={{gf_group}}
+  tags: user

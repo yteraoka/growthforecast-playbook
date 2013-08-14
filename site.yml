@@ -1,0 +1,16 @@
+- hosts: all
+  user: vagrant
+  sudo: yes
+  tasks:
+    - name: group hosts by distribution
+      group_by: key="{{ ansible_distribution }}-{{ ansible_distribution_version }}"
+
+- hosts: RedHat-6*:CentOS-6*:SL-6*
+  user: vagrant
+  sudo: yes
+  roles:
+    - { role: packages_el6 }
+    - { role: perl }
+    - { role: user }
+    - { role: growthforecast }
+    - { role: supervisor, sup_init_name: "supervisord", sup_conf_location: "/etc/supervisord.conf" }
